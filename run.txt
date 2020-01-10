@@ -1,0 +1,14 @@
+python label_image.py
+--graph=/tmp/output_graph.pb --labels=/tmp/output_labels.txt
+--input_layer=Placeholder
+--output_layer=final_result
+--image=flower_photos/daisy/21652746_cc379e0eea_m.jpg
+
+python retrain.py
+    --image_dir Training_Set_Traffic
+    --tfhub_module https://tfhub.dev/google/imagenet/pnasnet_large/feature_vector/3
+    --output_graph tf_files/graph_files/output_graph.pb --output_labels tf_files/graph_files/output_labels.txt
+    --summaries_dir tf_files/training_summary --how_many_training_steps=15000 --learning_rate=0.01
+    --bottleneck_dir tf_files/bottleneck
+
+tensorboard --logdir tf_files/training_summary
